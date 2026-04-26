@@ -153,13 +153,7 @@ public final class Client: Sendable {
 
     /// Maximum query payment, or nil if unlimited
     internal var defaultMaxQueryPayment: Hbar? {
-        let value = _maxQueryPayment.load(ordering: .relaxed)
-
-        guard value != 0 else {
-            return nil
-        }
-
-        return .fromTinybars(value)
+        getDefaultMaxQueryPayment()  // delegate, don't duplicate
     }
 
     /// Whether this client should use only plaintext endpoints.
