@@ -167,7 +167,6 @@ public class Query<Response>: ValidateChecksums {
                 // should this inherit the timeout?
                 // payment is required but none was specified, query the cost
                 let cost = try await self.getCost(client)
-    
                 let effectiveMax = self.payment.maxAmount ?? client.defaultMaxQueryPayment
                 if let maxAmount = effectiveMax {
                     guard cost <= maxAmount else {
