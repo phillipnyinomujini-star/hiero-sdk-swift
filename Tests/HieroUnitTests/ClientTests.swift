@@ -24,3 +24,21 @@ internal final class ClientTests: XCTestCase {
         XCTAssertNil(client.getOperatorPublicKey())
     }
 }
+
+extension ClientTests {
+    func testDefaultMaxQueryPaymentDefaultsToOneHbar() throws {
+        let client = Client.forTestnet()
+        XCTAssertEqual(client.getDefaultMaxQueryPayment(), Hbar.fromTinybars(100_000_000))
+    }
+
+    func testSetDefaultMaxQueryPayment() throws {
+        let client = Client.forTestnet()
+        try client.setDefaultMaxQueryPayment(Hbar(2))
+        XCTAssertEqual(client.getDefaultMaxQueryPayment(), Hbar(2))
+    }
+
+    func testNegativeMaxQueryPaymentThrows() throws {
+        let client = Client.forTestnet()
+        XCTAssertThrowsError(try client.setDefaultMaxQueryPayment(Hbar.fromTinybars(-1)))
+    }
+}
